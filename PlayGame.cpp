@@ -2,6 +2,7 @@
 #include <sstream>
 #include <SFML/Audio.hpp>
 #include <iostream>
+#include <cmath>
 
 using namespace sf;
 using namespace std;
@@ -85,8 +86,8 @@ void PlayGame(int numPlayers) {
 
     // Variables
     int yVelocityPad1 = 0;
-    int xVelocityBall = -4;
-    int yVelocityBall = -4;
+    float xVelocityBall = -4;
+    float yVelocityBall = -4;
     int yVelocityPad2 = 0;
     int pad1Score = 0;
     int pad2Score = 0;
@@ -214,10 +215,16 @@ void PlayGame(int numPlayers) {
         }
         if (ball.getPosition().x < -ball.getScale().x) {
             pad2Score++;
+            // Increasing difficulty
+            xVelocityBall += signbit(xVelocityBall) ? -0.5f : 0.5f;
+            yVelocityBall += signbit(yVelocityBall) ? -0.5f : 0.5f;
             ball.setPosition(Vector2f(window.getSize()) / 2.f);
         }
         if (ball.getPosition().x > window.getSize().x) {
             pad1Score++;
+            // Increasing difficulty
+            xVelocityBall += signbit(xVelocityBall) ? -0.5f : 0.5f;
+            yVelocityBall += signbit(yVelocityBall) ? -0.5f : 0.5f;
             ball.setPosition(Vector2f(window.getSize()) / 2.f);
         }
 
